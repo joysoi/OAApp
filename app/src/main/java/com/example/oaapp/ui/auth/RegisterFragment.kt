@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.oaapp.R
 
-class RegisterFragment : Fragment() {
+class RegisterFragment : BaseAuthFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

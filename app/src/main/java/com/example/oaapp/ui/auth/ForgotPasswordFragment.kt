@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.example.oaapp.R
 
 
-class ForgotPasswordFragment : Fragment() {
+class ForgotPasswordFragment : BaseAuthFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
