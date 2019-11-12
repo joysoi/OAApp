@@ -23,15 +23,23 @@ constructor(
     override fun handleStateEvent(stateEvent: AuthStateEvent): LiveData<DataState<AuthViewState>> {
         when(stateEvent){
 
-            is LoginAttemptEvent ->{
-               return AbsentLiveData.create()
+            is LoginAttemptEvent -> {
+                return authRepository.attemptLogin(
+                    stateEvent.email,
+                    stateEvent.password
+                )
             }
 
-            is RegisterAttemptEvent ->{
-                return AbsentLiveData.create()
+            is RegisterAttemptEvent -> {
+                return authRepository.attemptRegistration(
+                    stateEvent.email,
+                    stateEvent.username,
+                    stateEvent.password,
+                    stateEvent.confirm_password
+                )
             }
 
-            is CheckPreviousAuthEvent ->{
+            is CheckPreviousAuthEvent -> {
                 return AbsentLiveData.create()
             }
 
@@ -67,5 +75,15 @@ constructor(
         }
         update.authToken = authToken
         _viewState.value = update
+    }
+
+    fun cancelActiveJobs(){
+        authRepository.cancelActiveJobs()
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        cancelActiveJobs()
     }
 }

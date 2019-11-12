@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.example.oaapp.R
+import com.example.oaapp.ui.auth.state.AuthStateEvent
 import com.example.oaapp.ui.auth.state.LoginFields
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -25,6 +26,9 @@ class LoginFragment : BaseAuthFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeObservers()
+        login_button.setOnClickListener {
+            login()
+        }
     }
 
     fun subscribeObservers(){
@@ -34,6 +38,15 @@ class LoginFragment : BaseAuthFragment() {
                 it.login_password?.let{input_password.setText(it)}
             }
         })
+    }
+
+    fun login(){
+        viewModel.setStateEvent(
+            AuthStateEvent.LoginAttemptEvent(
+                input_email.text.toString(),
+                input_password.text.toString()
+            )
+        )
     }
 
     override fun onDestroyView() {
